@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ConceptSetsLoaderIntegrationTest extends DomainBaseModuleContextSensitiveTest {
@@ -56,7 +57,7 @@ public class ConceptSetsLoaderIntegrationTest extends DomainBaseModuleContextSen
 		{
 			Concept senseSet = cs.getConceptByUuid("54014540-311d-11ec-8d2b-0242ac110002");
 			assertNotNull(senseSet);
-			assertEquals(5, senseSet.getSetMembers().size());
+//			assertEquals(5, senseSet.getSetMembers().size());
 			List<ConceptSet> senseMembers = new ArrayList<>(senseSet.getConceptSets());
 			Collections.sort(senseMembers);
 			assertEquals("Smell", senseMembers.get(0).getConcept().getName().getName());
@@ -67,8 +68,8 @@ public class ConceptSetsLoaderIntegrationTest extends DomainBaseModuleContextSen
 			assertEquals(new Double(3.0), senseMembers.get(2).getSortWeight());
 			assertEquals("Touch", senseMembers.get(3).getConcept().getName().getName());
 			assertEquals(new Double(4.0), senseMembers.get(3).getSortWeight());
-			assertEquals("Sound", senseMembers.get(4).getConcept().getName().getName());
-			assertEquals(new Double(50.0), senseMembers.get(4).getSortWeight());
+//			assertEquals("Sound", senseMembers.get(4).getConcept().getName().getName());
+//			assertEquals(new Double(50.0), senseMembers.get(4).getSortWeight());
 		}
 		
 		{
@@ -84,5 +85,35 @@ public class ConceptSetsLoaderIntegrationTest extends DomainBaseModuleContextSen
 			assertEquals("Sight", senseAnswers.get(2).getAnswerConcept().getName().getName());
 			assertEquals(new Double(200), senseAnswers.get(2).getSortWeight());
 		}
+	}
+	
+	@Test
+	public void load_loadsPatialConceptSetBecauseOfFailedMemberAccordingToCsvFiles() {
+		// setup
+		
+		// replay
+		conceptsLoader.load();
+		conceptSetsLoader.load();
+		
+		// verify
+		{
+			Concept senseSet = cs.getConceptByUuid("54014540-311d-11ec-8d2b-0242ac110002");
+			assertNotNull(senseSet);
+			assertNotEquals(5, senseSet.getSetMembers().size());
+			assertEquals(4, senseSet.getSetMembers().size());
+			List<ConceptSet> senseMembers = new ArrayList<>(senseSet.getConceptSets());
+			Collections.sort(senseMembers);
+			assertEquals("Smell", senseMembers.get(0).getConcept().getName().getName());
+			assertEquals(new Double(1.0), senseMembers.get(0).getSortWeight());
+			assertEquals("Taste", senseMembers.get(1).getConcept().getName().getName());
+			assertEquals(new Double(2.0), senseMembers.get(1).getSortWeight());
+			assertEquals("Sight", senseMembers.get(2).getConcept().getName().getName());
+			assertEquals(new Double(3.0), senseMembers.get(2).getSortWeight());
+			assertEquals("Touch", senseMembers.get(3).getConcept().getName().getName());
+			assertEquals(new Double(4.0), senseMembers.get(3).getSortWeight());
+//			assertEquals("Sound", senseMembers.get(4).getConcept().getName().getName());
+//			assertEquals(new Double(50.0), senseMembers.get(4).getSortWeight());
+		}
+		
 	}
 }

@@ -5,4 +5,4 @@ Uuid,Fully specified name:en,Same as mappings,Description:en,Data class,Data typ
 6878804b-311d-11ec-8d2b-0242ac110002,Taste,CIEL:TASTE,Taste,Misc,N/A,,,,
 6b29ee43-311d-11ec-8d2b-0242ac110002,Touch,CIEL:TOUCH,Touch,Misc,N/A,,,,
 6da4eb30-311d-11ec-8d2b-0242ac110002,Sight,CIEL:SIGHT,Sight,Misc,N/A,,,,
-703404f7-311d-11ec-8d2b-0242ac110002,Sound,CIEL:SOUND,Sound,Misc,N/A,,,,
+703404f7-311d-11ec-8d2b-0242ac110002,Sound,CIEL-FAILED:SOUND,Sound,Misc,N/A,,,,
